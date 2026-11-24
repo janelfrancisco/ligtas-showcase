@@ -286,6 +286,21 @@ section{padding:70px 22px}.section-head{margin-bottom:25px}.section-head .eyebro
 .dashboard-access p {max-width:60ch}
 .dashboard-access .btn {background:var(--blue);color:#fff}
 .dashboard-access .btn:hover {background:var(--navy)}
+@keyframes showcase-enter {
+  from {opacity:.35;transform:translateY(12px)}
+  to {opacity:1;transform:translateY(0)}
+}
+@media (prefers-reduced-motion:no-preference) {
+  .hero .wrap,.showcase-entered {animation:showcase-enter 440ms ease-out both}
+  .btn {transition:background-color 160ms ease,box-shadow 160ms ease,transform 160ms ease}
+  .btn:focus-visible {outline:2px solid #1268b4;outline-offset:4px}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  .btn:hover {transform:translateY(-2px);box-shadow:0 5px 12px rgba(8,42,81,.18)}
+}
+@media (prefers-reduced-motion:reduce) {
+  html {scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
@@ -382,4 +397,18 @@ section{padding:70px 22px}.section-head{margin-bottom:25px}.section-head .eyebro
 <section id="results" class="light"><div class="wrap"><div class="section-head"><span class="eyebrow">07 / Evaluation findings</span><h2>Research results.</h2><p class="lead">Results reported in the LigTAS capstone paper. UAT scores are overall mean ratings on a five-point scale.</p></div><div class="stats"><div class="stat-card"><div class="stat">97.14%</div><div class="stat-label">Test case pass rate · 102/105</div></div><div class="stat-card"><div class="stat">4.59/5</div><div class="stat-label">Residents · 30 respondents</div></div><div class="stat-card"><div class="stat">4.83/5</div><div class="stat-label">Barangay Officials · 4 respondents</div></div><div class="stat-card"><div class="stat">5.00/5</div><div class="stat-label">LGU/MDRRMO · 2 respondents</div></div></div><p class="note">36 total UAT respondents. These are study evaluation results, not a guarantee of emergency-service performance.</p></div></section>
 <section id="team"><div class="wrap"><div class="section-head"><span class="eyebrow">08 / Project team</span><h2>Meet the researchers.</h2><p class="lead">Bachelor of Science in Information Technology · STI College Balagtas</p></div><div class="team-list"><div class="person">Daisy R. Francisco<small>Researcher</small></div><div class="person">Janel M. Galisfrancisco<small>Researcher</small></div><div class="person">John Daniel B. Navarro<small>Researcher</small></div><div class="person">Danica Daniela C. Reyes<small>Researcher</small></div></div></div></section>
 </main><footer class="footer"><div class="wrap"><div><strong>LigTAS</strong><br>Community Flood Alert and Emergency Management System<br>STI College Balagtas · BSIT Research Colloquium 2026</div><div>Developed by Janel M. Galisfrancisco, Daisy R. Francisco,<br>John Daniel B. Navarro &amp; Danica Daniela C. Reyes.<br><small>Adviser: Maribeth Delos Reyes</small></div></div></footer>
+<script>
+  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver(entries => {
+      for (const { target, isIntersecting } of entries) {
+        if (!isIntersecting) continue;
+        target.classList.add('showcase-entered');
+        observer.unobserve(target);
+      }
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.card, .architecture, .stat-card, .person, .apk-card')
+      .forEach(element => observer.observe(element));
+  }
+</script>
 </body></html>
